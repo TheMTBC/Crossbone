@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Crossbone.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Crossbone.Abstracts
     internal abstract class Scene : GameObject, IDisposable
     {
         private List<Entity> _entities = new List<Entity>();
+        public Camera camera = new Camera();
 
         public void Dispose()
         {

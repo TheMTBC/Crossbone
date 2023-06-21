@@ -50,8 +50,8 @@ namespace Crossbone.Components
                 if (width > 0)
                 {
                     _font.ApplyTextureRect(ch, _sprite);
-                    _sprite.Position = position + new Vector2f(offset, 0);
-                    game?.window.Draw(_sprite);
+                    _sprite.Position = position + new Vector2f(offset, 0) - game.Scene.camera.position.vector;
+                    game.window.Draw(_sprite);
                 }
                 offset += width;
             }

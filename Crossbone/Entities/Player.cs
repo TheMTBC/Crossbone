@@ -5,6 +5,7 @@ using SFML.System;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,6 +47,7 @@ namespace Crossbone.Entities
                     _transform.position += offset.Y * new Vector2(0, 1);
                 }
             }
+            game.Scene.camera.position = Vector2.Clamp(_transform.position - new Vector2(400, 0), new Vector2(0, 0), new Vector2(300, 0));
         }
     }
 }

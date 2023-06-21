@@ -37,7 +37,7 @@ namespace Crossbone.Components
             game.window.Draw(sprite);
             if (_transform != null)
             {
-                sprite.Position = _transform.position.vector;
+                sprite.Position = _transform.position.vector - game.Scene.camera.position.vector;
             }
         }
     }

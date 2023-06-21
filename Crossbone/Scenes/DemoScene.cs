@@ -1,4 +1,5 @@
 ﻿using Crossbone.Abstracts;
+using Crossbone.Components;
 using Crossbone.Entities;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,11 @@ namespace Crossbone.Scenes
         {
             Add(new Player());
             var a = new Text();
-            a.text = "ABC";
+            a.text = "The quick brown fox jumps over the lazy dog.";
             Add(a);
+            var b = new Text();
+            b.text = "1234567890 3.14 3,14";
+            Add(b);
             Add(new Test());
         }
     }

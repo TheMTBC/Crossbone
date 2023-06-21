@@ -68,5 +68,10 @@ namespace Crossbone.Utils
         {
             get { return Magnitude > 0 ? new Vector2(vector) / Magnitude : this; }
         }
+
+        public static Vector2 Clamp(Vector2 v, Vector2 min, Vector2 max)
+        {
+            return new Vector2(Math.Clamp(v.X, min.X, max.X), Math.Clamp(v.Y, min.Y, max.Y));
+        }
     }
 }
