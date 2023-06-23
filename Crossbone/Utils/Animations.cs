@@ -32,12 +32,12 @@ namespace Crossbone.Utils
             }
         }
 
-        public int Index(string animationName)
+        public int GetIndex(string animationName)
         {
             return _row.ContainsKey(animationName) ? _row[animationName] : -1;
         }
 
-        public int Frame(string animationName)
+        public int GetCountFrame(string animationName)
         {
             return _animations.ContainsKey(animationName) ? _animations[animationName] : -1;
         }

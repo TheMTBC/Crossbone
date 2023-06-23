@@ -1,7 +1,6 @@
 ﻿using Crossbone.Abstracts;
 using Crossbone.Components;
 using Crossbone.Utils;
-using SFML.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +9,30 @@ using System.Threading.Tasks;
 
 namespace Crossbone.Entities
 {
-    internal class StaticSprite : Entity
+    internal class StaticTile : Entity
     {
-        private Components.Transform _transform;
+        private Transform _transform;
         private Renderer _renderer;
         private BoxCollider _boxCollider;
-        private Texture _texture;
+        private Tiles _tiles;
+        private int _tile;
         
-        public StaticSprite(Texture texture)
+        public StaticTile(Tiles tiles, int tile)
         {
-            _texture = texture;
+            _tiles = tiles;
+            _tile = tile;
         }
 
         public override void Start()
         {
             base.Start();
-            _transform = Add(new Components.Transform());
-            _renderer = Add(new Renderer(_texture));
-            _boxCollider = Add(new BoxCollider(new Vector2(16, 16)));
+            _transform = Add(new Transform());
+            _renderer = Add(new Renderer(_tiles.texture));
+            _tiles.ApplyTextureRect(_tile, _renderer.sprite);
+            if (_tiles.IsSolid(_tile))
+            {
+                _boxCollider = Add(new BoxCollider(new Vector2(_tiles.size, _tiles.size)));
+            }
         }
 
         public override void Tick()

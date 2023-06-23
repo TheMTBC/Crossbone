@@ -50,7 +50,7 @@ namespace Crossbone.Components
             {
                 return;
             }
-            var index = _animations.Index(_animation);
+            var index = _animations.GetIndex(_animation);
             if (index < 0)
             {
                 return;
@@ -60,7 +60,7 @@ namespace Crossbone.Components
             if (_time > speed)
             {
                 _time = 0;
-                frame = (frame + 1) % _animations.Frame(_animation);
+                frame = (frame + 1) % _animations.GetCountFrame(_animation);
             }
         }
     }

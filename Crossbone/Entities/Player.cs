@@ -23,18 +23,16 @@ namespace Crossbone.Entities
             base.Start();
             _transform = Add(new Transform());
             _renderer = Add(new Renderer(game.resources.frisk));
-            _boxCollider = Add(new BoxCollider(new Vector2(game.resources.friskAnimations.width, game.resources.friskAnimations.height)));
+            _boxCollider = Add(new BoxCollider(new Vector2(game.resources.friskAnimations.width, game.resources.friskAnimations.height / 2), new Vector2(0, game.resources.friskAnimations.height / 2)));
             _animator = Add(new Animator(game.resources.friskAnimations, "down"));
         }
 
-        public override void Tick()
+        private int IsCollide(Vector2 offset)
         {
-            base.Tick();
-            var offset = (game.input.x * new Vector2(1, 0) + game.input.y * new Vector2(0, -1)) * 150 * game.deltaTime;
             var colliders = game.Scene.GetAll<BoxCollider>();
             if (colliders.Count == 1)
             {
-                _transform.position += offset;
+                return 0;
             }
             foreach (var boxCollider in colliders)
             {
@@ -42,15 +40,48 @@ namespace Crossbone.Entities
                 {
                     continue;
                 }
-                if (!_boxCollider.Collide(_transform.position + offset.X * new Vector2(1, 0), boxCollider))
+                int collided = 0;
+                if (_boxCollider.Collide(_transform.position + offset.X * new Vector2(1, 0), boxCollider))
+                {
+                    collided += 1;
+                }
+                if (_boxCollider.Collide(_transform.position + offset.Y * new Vector2(0, 1), boxCollider))
+                {
+                    collided += 2;
+                }
+                if (collided > 0)
+                {
+                    return collided;
+                }
+            }
+            return 0;
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+            var offset = (game.input.x * new Vector2(1, 0) + game.input.y * new Vector2(0, -1)) * 150 * game.deltaTime;
+            var collided = IsCollide(offset);
+            if (collided > 0)
+            {
+                /*
+                if (collided == 2)
                 {
                     _transform.position += offset.X * new Vector2(1, 0);
                 }
-                if (!_boxCollider.Collide(_transform.position + offset.Y * new Vector2(0, 1), boxCollider))
+                else if (collided == 1)
                 {
                     _transform.position += offset.Y * new Vector2(0, 1);
+
                 }
+                */
             }
+            else
+            {
+                _transform.position += offset;
+            }
+
+
             game.Scene.camera.position = Vector2.Clamp(_transform.position - new Vector2(400, 0), new Vector2(0, 0), new Vector2(300, 0));
             _animator.speed = offset.Magnitude < 0.1f ? float.PositiveInfinity : 0.15f;
             _animator.frame = offset.Magnitude < 0.1f ? 0 : _animator.frame;

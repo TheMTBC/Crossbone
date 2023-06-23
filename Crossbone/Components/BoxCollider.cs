@@ -12,10 +12,18 @@ namespace Crossbone.Components
     {
         private Vector2 _size;
         private Transform? _transform;
+        private Vector2 _offset;
+
+        public BoxCollider(Vector2 size, Vector2 offset)
+        {
+            _size = size;
+            this._offset = offset;
+        }
 
         public BoxCollider(Vector2 size)
         {
             _size = size;
+            _offset = new Vector2(0, 0);
         }
 
         public override void Start()
@@ -30,8 +38,8 @@ namespace Crossbone.Components
             {
                 return false;
             }
-            return (position.X + _size.X > collider._transform.position.X) &&
-                (position.X < collider._transform.position.X + collider._size.X);
+            return (position.X + _size.X + _offset.X > collider._transform.position.X) &&
+                (position.X + _offset.X < collider._transform.position.X + collider._size.X);
         }
 
         private bool CollideByY(Vector2 position, BoxCollider collider)
@@ -40,8 +48,8 @@ namespace Crossbone.Components
             {
                 return false;
             }
-            return (position.Y + _size.Y > collider._transform.position.Y) &&
-                (position.Y < collider._transform.position.Y + collider._size.Y);
+            return (position.Y + _size.Y + _offset.Y > collider._transform.position.Y) &&
+                (position.Y + _offset.Y < collider._transform.position.Y + collider._size.Y);
         }
 
         public bool Collide(Vector2 position, BoxCollider collider)

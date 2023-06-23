@@ -1,6 +1,7 @@
 ﻿using Crossbone.Abstracts;
 using Crossbone.Components;
 using Crossbone.Entities;
+using Crossbone.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,11 @@ namespace Crossbone.Scenes
     {
         public override void Start()
         {
-            Add(new Player());
-            var a = new Text();
-            a.text = "The quick brown fox jumps over the lazy dog.";
-            Add(a);
-            var b = new Text();
-            b.text = "1234567890 3.14 3,14";
-            Add(b);
-            b.Get<Transform>().position += new Utils.Vector2(0, 40);
+            new LevelBuilder(game.resources.dungeon, game.resources.demo).Build(this);
+
+            Add(new Player()).Get<Transform>().position += new Vector2(300, 300);
+
             Add(new FPSMeter());
-            Add(new StaticSprite(game.resources.player)).Get<Transform>().position += new Utils.Vector2(100, 0);
         }
     }
 }

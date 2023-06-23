@@ -18,6 +18,7 @@ namespace Crossbone
         public void Dispose()
         {
             player.Dispose();
+            frisk.Dispose();
             font.Dispose();
         }
 
@@ -25,6 +26,8 @@ namespace Crossbone
         public Texture frisk;
         public Animations friskAnimations;
         public RasterFont font;
+        public Tiles dungeon;
+        public Level demo;
 
         public Resources()
         {
@@ -32,6 +35,8 @@ namespace Crossbone
             frisk = new Texture(Prefix("frisk.png"));
             friskAnimations = new Animations(Prefix("frisk.json"));
             font = new RasterFont(Prefix("fonts/en.png"), Prefix("fonts/en.json"));
+            dungeon = new Tiles(Prefix("dungeon.png"), Prefix("dungeon.json"));
+            demo = new Level(Prefix("levels/demo.json"));
         }
     }
 }
