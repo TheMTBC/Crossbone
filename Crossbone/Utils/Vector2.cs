@@ -19,6 +19,11 @@ namespace Crossbone.Utils
             this.vector = vector;
         }
 
+        public Vector2(Vector2u vector)
+        {
+            this.vector = new Vector2f(vector.X, vector.Y);
+        }
+
         public Vector2(float x, float y)
         {
             vector = new Vector2f(x, y);

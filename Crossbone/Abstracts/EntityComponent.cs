@@ -8,7 +8,7 @@ namespace Crossbone.Abstracts
 {
     internal abstract class EntityComponent : GameObject, IDisposable
     {
-        protected Entity entity;
+        public Entity entity;
 
         public void SetEntity(Entity entity)
         {

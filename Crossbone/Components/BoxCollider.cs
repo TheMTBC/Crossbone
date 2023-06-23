@@ -30,7 +30,8 @@ namespace Crossbone.Components
             {
                 return false;
             }
-            return (position.X >= collider._transform.position.X && position.X <= collider._transform.position.X + collider._size.X) || (position.X + _size.X >= collider._transform.position.X && position.X + _size.X <= collider._transform.position.X + collider._size.X);
+            return (position.X + _size.X > collider._transform.position.X) &&
+                (position.X < collider._transform.position.X + collider._size.X);
         }
 
         private bool CollideByY(Vector2 position, BoxCollider collider)
@@ -39,7 +40,8 @@ namespace Crossbone.Components
             {
                 return false;
             }
-            return (position.Y >= collider._transform.position.Y && position.Y <= collider._transform.position.Y + collider._size.Y) || (position.Y + _size.Y >= collider._transform.position.Y && position.Y + _size.Y <= collider._transform.position.Y + collider._size.Y);
+            return (position.Y + _size.Y > collider._transform.position.Y) &&
+                (position.Y < collider._transform.position.Y + collider._size.Y);
         }
 
         public bool Collide(Vector2 position, BoxCollider collider)

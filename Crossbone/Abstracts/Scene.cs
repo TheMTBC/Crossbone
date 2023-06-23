@@ -29,11 +29,12 @@ namespace Crossbone.Abstracts
             }
         }
 
-        public void Add(Entity entity)
+        public T Add<T>(T entity) where T : Entity
         {
             _entities.Add(entity);
             entity.SetGame(game);
             entity.Start();
+            return entity;
         }
 
         public List<T> GetAll<T>() where T : EntityComponent

@@ -22,11 +22,15 @@ namespace Crossbone
         }
 
         public Texture player;
+        public Texture frisk;
+        public Animations friskAnimations;
         public RasterFont font;
 
         public Resources()
         {
             player = new Texture(Prefix("player.png"));
+            frisk = new Texture(Prefix("frisk.png"));
+            friskAnimations = new Animations(Prefix("frisk.json"));
             font = new RasterFont(Prefix("fonts/en.png"), Prefix("fonts/en.json"));
         }
     }

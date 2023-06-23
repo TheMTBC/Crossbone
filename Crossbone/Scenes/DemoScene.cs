@@ -20,7 +20,9 @@ namespace Crossbone.Scenes
             var b = new Text();
             b.text = "1234567890 3.14 3,14";
             Add(b);
-            Add(new Test());
+            b.Get<Transform>().position += new Utils.Vector2(0, 40);
+            Add(new FPSMeter());
+            Add(new StaticSprite(game.resources.player)).Get<Transform>().position += new Utils.Vector2(100, 0);
         }
     }
 }

@@ -18,12 +18,13 @@ namespace Crossbone.Abstracts
             }
         }
 
-        public void Add(EntityComponent component)
+        public T Add<T>(T component) where T : EntityComponent
         {
             _components.Add(component);
             component.SetGame(game);
             component.SetEntity(this);
             component.Start();
+            return component;
         }
 
         public T? Get<T>() where T : EntityComponent

@@ -16,23 +16,27 @@ namespace Crossbone.Entities
         private Transform _transform;
         private Renderer _renderer;
         private BoxCollider _boxCollider;
+        private Animator _animator;
 
         public override void Start()
         {
             base.Start();
-            _transform = new Transform();
-            Add(_transform);
-            _renderer = new Renderer(game.resources.player);
-            Add(_renderer);
-            _boxCollider = new BoxCollider(new Vector2(16, 16));
-            Add(_boxCollider);
+            _transform = Add(new Transform());
+            _renderer = Add(new Renderer(game.resources.frisk));
+            _boxCollider = Add(new BoxCollider(new Vector2(game.resources.friskAnimations.width, game.resources.friskAnimations.height)));
+            _animator = Add(new Animator(game.resources.friskAnimations, "down"));
         }
 
         public override void Tick()
         {
             base.Tick();
-            var offset = (game.input.x * new Vector2(1, 0) + game.input.y * new Vector2(0, -1)).Normilized * 150 * game.deltaTime;
-            foreach (var boxCollider in game.Scene.GetAll<BoxCollider>())
+            var offset = (game.input.x * new Vector2(1, 0) + game.input.y * new Vector2(0, -1)) * 150 * game.deltaTime;
+            var colliders = game.Scene.GetAll<BoxCollider>();
+            if (colliders.Count == 1)
+            {
+                _transform.position += offset;
+            }
+            foreach (var boxCollider in colliders)
             {
                 if (boxCollider == _boxCollider)
                 {
@@ -48,6 +52,25 @@ namespace Crossbone.Entities
                 }
             }
             game.Scene.camera.position = Vector2.Clamp(_transform.position - new Vector2(400, 0), new Vector2(0, 0), new Vector2(300, 0));
+            _animator.speed = offset.Magnitude < 0.1f ? float.PositiveInfinity : 0.15f;
+            _animator.frame = offset.Magnitude < 0.1f ? 0 : _animator.frame;
+            if (game.input.y < 0 && game.input.x == 0)
+            {
+                _animator.Animation = "down";
+            }
+            else if (game.input.y > 0 && game.input.x == 0)
+            {
+                _animator.Animation = "up";
+            }
+            else if (game.input.x > 0)
+            {
+                _animator.Animation = "right";
+            }
+            else if (game.input.x < 0)
+            {
+                _animator.Animation = "left";
+            }
+            _renderer.position = _transform.ToWorld();
         }
     }
 }

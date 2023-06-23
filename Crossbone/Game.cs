@@ -19,10 +19,12 @@ namespace Crossbone
         public Resources resources;
         public float deltaTime = 1f / 60f;
         public Input input = new Input();
+        public int width = 800;
+        public int height = 600;
 
         public Game()
         {
-            window = new RenderWindow(new VideoMode(800, 600), "Crossbone");
+            window = new RenderWindow(new VideoMode((uint)width, (uint)height), "Crossbone");
             window.SetFramerateLimit(0);
             window.SetVerticalSyncEnabled(true);
             AddListeners();

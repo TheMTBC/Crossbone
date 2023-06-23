@@ -24,15 +24,11 @@ namespace Crossbone.Entities
             Add(_textRenderer);
         }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-        }
-
         public override void Tick()
         {
             base.Tick();
             _textRenderer.text = text;
+            _textRenderer.position = _transform.ToWorld();
         }
     }
 }

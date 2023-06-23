@@ -1,0 +1,10 @@
+{
+    "width": 38,
+    "height": 58,
+    "animations": {
+        "down": 4,
+        "right": 2,
+        "left": 2,
+        "up": 4
+    }
+}

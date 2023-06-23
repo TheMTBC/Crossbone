@@ -1,4 +1,5 @@
 ﻿using Crossbone.Abstracts;
+using Crossbone.Utils;
 using SFML.Graphics;
 using SFML.System;
 using System;
@@ -12,17 +13,11 @@ namespace Crossbone.Components
     internal class Renderer : EntityComponent
     {
         public Sprite sprite;
-        private Transform? _transform;
+        public Vector2 position = new Vector2();
 
         public Renderer(Texture texture)
         {
             sprite = new Sprite(texture);
-        }
-
-        public override void Start()
-        {
-            base.Start();
-            _transform = entity.Get<Transform>();
         }
 
         public override void Dispose()
@@ -34,11 +29,8 @@ namespace Crossbone.Components
         public override void Tick()
         {
             base.Tick();
+            sprite.Position = position.vector;
             game.window.Draw(sprite);
-            if (_transform != null)
-            {
-                sprite.Position = _transform.position.vector - game.Scene.camera.position.vector;
-            }
         }
     }
 }
