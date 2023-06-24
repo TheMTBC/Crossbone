@@ -24,19 +24,23 @@ namespace Crossbone
 
         public Texture player;
         public Texture frisk;
+        public Texture ui;
         public Animations friskAnimations;
         public RasterFont font;
         public Tiles dungeon;
         public Level demo;
+        public Shader uiShader;
 
         public Resources()
         {
             player = new Texture(Prefix("player.png"));
             frisk = new Texture(Prefix("frisk.png"));
+            ui = new Texture(Prefix("ui.png"));
             friskAnimations = new Animations(Prefix("frisk.json"));
             font = new RasterFont(Prefix("fonts/en.png"), Prefix("fonts/en.json"));
             dungeon = new Tiles(Prefix("dungeon.png"), Prefix("dungeon.json"));
             demo = new Level(Prefix("levels/demo.json"));
+            uiShader = new Shader(null, null, Prefix("shaders/ui.glsl"));
         }
     }
 }

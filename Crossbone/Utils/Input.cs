@@ -21,6 +21,7 @@ namespace Crossbone.Utils
         {
             get { return (_up ? 1 : 0) + (_down ? -1 : 0); }
         }
+        public bool use = false;
 
         public void ApplyListeners(Game game)
         {
@@ -67,6 +68,10 @@ namespace Crossbone.Utils
             if (e.Code == SFML.Window.Keyboard.Key.Down)
             {
                 _down = d;
+            }
+            if (e.Code == SFML.Window.Keyboard.Key.Enter)
+            {
+                use = true;
             }
         }
     }

@@ -13,12 +13,20 @@ namespace Crossbone.Entities
         private TextRenderer _renderer;
         private float _time;
         private float _count;
+        private Transform? _player;
+        private TextRenderer _position;
 
         public override void Start()
         {
-            _renderer = new TextRenderer(game.resources.font);
+            _renderer = Add(new TextRenderer(game.resources.font));
             _renderer.position = new Utils.Vector2(0, game.height - 40);
-            Add(_renderer);
+            _position = Add(new TextRenderer(game.resources.font));
+            _position.position = new Utils.Vector2(0, game.height - 80);
+            var player = game.Scene.Get<Player>();
+            if (player != null)
+            {
+                _player = player.Get<Transform>();
+            }
         }
 
         public override void Tick()
@@ -31,6 +39,10 @@ namespace Crossbone.Entities
                 _renderer.text = "FPS " + Math.Round((_count / _time));
                 _time = 0;
                 _count = 0;
+            }
+            if (_player != null)
+            {
+                _position.text = string.Format("{0} {1}", _player.position.X.ToString("0.0"), _player.position.Y.ToString("0.0"));
             }
         }
     }

@@ -40,9 +40,15 @@ namespace Crossbone
                 window.Clear();
                 _scene?.Tick();
                 window.Display();
+                ResetInput();
                 deltaTime = clock.ElapsedTime.AsSeconds();
             }
             window.Dispose();
+        }
+
+        private void ResetInput()
+        {
+            input.use = false;
         }
 
         private void AddListeners()

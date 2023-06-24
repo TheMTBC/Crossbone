@@ -23,7 +23,7 @@ namespace Crossbone.Abstracts
 
         public void Tick()
         {
-            foreach (var entity in _entities)
+            foreach (var entity in _entities.ToArray())
             {
                 entity.Tick();
             }
@@ -45,6 +45,24 @@ namespace Crossbone.Abstracts
                 list.AddRange(entity.GetAll<T>());
             }
             return list;
+        }
+
+        public T? Get<T>() where T : Entity
+        {
+            foreach (var entity in _entities)
+            {
+                if (entity.GetType().IsAssignableTo(typeof(T)))
+                {
+                    return (T) entity;
+                }
+            }
+            return null;
+        }
+
+        public void Remove(Entity entity)
+        {
+            _entities.Remove(entity);
+            entity.Dispose();
         }
     }
 }

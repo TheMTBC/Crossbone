@@ -13,17 +13,23 @@ namespace Crossbone.Components
         private Vector2 _size;
         private Transform? _transform;
         private Vector2 _offset;
+        private int _layer;
 
-        public BoxCollider(Vector2 size, Vector2 offset)
+        public static readonly int SOLID_LAYER = 0b1;
+        public static readonly int TRIGGER_LAYER = 0b10;
+
+        public BoxCollider(Vector2 size, Vector2 offset, int layer)
         {
             _size = size;
-            this._offset = offset;
+            _offset = offset;
+            _layer = layer;
         }
 
         public BoxCollider(Vector2 size)
         {
             _size = size;
             _offset = new Vector2(0, 0);
+            _layer = SOLID_LAYER;
         }
 
         public override void Start()
@@ -52,9 +58,17 @@ namespace Crossbone.Components
                 (position.Y + _offset.Y < collider._transform.position.Y + collider._size.Y);
         }
 
-        public bool Collide(Vector2 position, BoxCollider collider)
+        public bool Collide(Vector2 position, BoxCollider collider, int layer = -1)
         {
-            return CollideByX(position, collider) && CollideByY(position, collider);
+            if (layer == -1)
+            {
+                layer = _layer;
+            }
+            if ((layer & collider._layer) > 0)
+            {
+                return CollideByX(position, collider) && CollideByY(position, collider);
+            }
+            return false;
         }
     }
 }

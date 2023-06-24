@@ -14,10 +14,17 @@ namespace Crossbone.Components
     {
         public Sprite sprite;
         public Vector2 position = new Vector2();
+        private Shader? _shader = null;
 
         public Renderer(Texture texture)
         {
             sprite = new Sprite(texture);
+        }
+
+        public Renderer(Texture texture, Shader shader)
+        {
+            sprite = new Sprite(texture);
+            _shader = shader;
         }
 
         public override void Dispose()
@@ -30,7 +37,28 @@ namespace Crossbone.Components
         {
             base.Tick();
             sprite.Position = position.vector;
-            game.window.Draw(sprite);
+            if (_shader != null)
+            {
+                _shader.SetUniform("texture", Shader.CurrentTexture);
+                _shader.SetUniform("scale", sprite.Scale);
+                game.window.Draw(sprite, new RenderStates(_shader));
+            }
+            else
+            {
+                game.window.Draw(sprite);
+            }
+        }
+
+        public Vector2 Size
+        {
+            get
+            {
+                return new Vector2(sprite.Scale.X * sprite.TextureRect.Width, sprite.TextureRect.Height * sprite.Scale.Y);
+            }
+            set
+            {
+                sprite.Scale = new Vector2f(value.X / sprite.TextureRect.Width, value.Y / sprite.TextureRect.Height);
+            }
         }
     }
 }

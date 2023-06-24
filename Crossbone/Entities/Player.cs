@@ -23,7 +23,11 @@ namespace Crossbone.Entities
             base.Start();
             _transform = Add(new Transform());
             _renderer = Add(new Renderer(game.resources.frisk));
-            _boxCollider = Add(new BoxCollider(new Vector2(game.resources.friskAnimations.width, game.resources.friskAnimations.height / 2), new Vector2(0, game.resources.friskAnimations.height / 2)));
+            _boxCollider = Add(new BoxCollider(
+                new Vector2(game.resources.friskAnimations.width, game.resources.friskAnimations.height / 2),
+                new Vector2(0, game.resources.friskAnimations.height / 2),
+                BoxCollider.SOLID_LAYER | BoxCollider.TRIGGER_LAYER
+            ));
             _animator = Add(new Animator(game.resources.friskAnimations, "down"));
         }
 
@@ -41,11 +45,11 @@ namespace Crossbone.Entities
                     continue;
                 }
                 int collided = 0;
-                if (_boxCollider.Collide(_transform.position + offset.X * new Vector2(1, 0), boxCollider))
+                if (_boxCollider.Collide(_transform.position + offset.X * new Vector2(1, 0), boxCollider, BoxCollider.SOLID_LAYER))
                 {
                     collided += 1;
                 }
-                if (_boxCollider.Collide(_transform.position + offset.Y * new Vector2(0, 1), boxCollider))
+                if (_boxCollider.Collide(_transform.position + offset.Y * new Vector2(0, 1), boxCollider, BoxCollider.SOLID_LAYER))
                 {
                     collided += 2;
                 }
@@ -59,30 +63,22 @@ namespace Crossbone.Entities
 
         public override void Tick()
         {
-            base.Tick();
-            var offset = (game.input.x * new Vector2(1, 0) + game.input.y * new Vector2(0, -1)) * 150 * game.deltaTime;
-            var collided = IsCollide(offset);
-            if (collided > 0)
-            {
-                /*
-                if (collided == 2)
-                {
-                    _transform.position += offset.X * new Vector2(1, 0);
-                }
-                else if (collided == 1)
-                {
-                    _transform.position += offset.Y * new Vector2(0, 1);
 
-                }
-                */
-            }
-            else
+            var offset = (game.input.x * new Vector2(1, 0) + game.input.y * new Vector2(0, -1)) * 150 * game.deltaTime;
+            if (IsCollide(offset) == 0)
             {
                 _transform.position += offset;
             }
 
+            SetAnimation(offset);
+            
+            _renderer.position = _transform.ToWorld();
 
-            game.Scene.camera.position = Vector2.Clamp(_transform.position - new Vector2(400, 0), new Vector2(0, 0), new Vector2(300, 0));
+            base.Tick();
+        }
+
+        private void SetAnimation(Vector2 offset)
+        {
             _animator.speed = offset.Magnitude < 0.1f ? float.PositiveInfinity : 0.15f;
             _animator.frame = offset.Magnitude < 0.1f ? 0 : _animator.frame;
             if (game.input.y < 0 && game.input.x == 0)
@@ -101,7 +97,6 @@ namespace Crossbone.Entities
             {
                 _animator.Animation = "left";
             }
-            _renderer.position = _transform.ToWorld();
         }
     }
 }

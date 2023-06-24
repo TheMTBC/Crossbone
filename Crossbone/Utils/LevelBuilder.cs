@@ -13,11 +13,13 @@ namespace Crossbone.Utils
     {
         private Tiles _tiles;
         private Level _level;
+        private Vector2 _offset;
 
-        public LevelBuilder(Tiles tiles, Level level)
+        public LevelBuilder(Tiles tiles, Level level, Vector2 offset)
         {
             _tiles = tiles;
             _level = level;
+            _offset = offset;
         }
 
         public void Build(Scene scene)
@@ -30,7 +32,7 @@ namespace Crossbone.Utils
                     var tr = tile.Get<Transform>();
                     if (tr != null)
                     {
-                        tr.position = new Vector2(x * _tiles.size, y * _tiles.size);
+                        tr.position = new Vector2(x * _tiles.size, y * _tiles.size) + _offset;
                     }
                 }
             }
