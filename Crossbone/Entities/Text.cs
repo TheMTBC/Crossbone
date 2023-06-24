@@ -16,6 +16,11 @@ namespace Crossbone.Entities
         private Transform _transform;
         public string text = "";
 
+        public Text(string text)
+        {
+            this.text = text;
+        }
+
         public override void Start()
         {
             _transform = new Transform();

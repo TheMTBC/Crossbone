@@ -28,7 +28,7 @@ namespace Crossbone
         public Animations friskAnimations;
         public RasterFont font;
         public Tiles dungeon;
-        public Level demo;
+        public Level room1;
         public Shader uiShader;
 
         public Resources()
@@ -39,7 +39,7 @@ namespace Crossbone
             friskAnimations = new Animations(Prefix("frisk.json"));
             font = new RasterFont(Prefix("fonts/en.png"), Prefix("fonts/en.json"));
             dungeon = new Tiles(Prefix("dungeon.png"), Prefix("dungeon.json"));
-            demo = new Level(Prefix("levels/demo.json"));
+            room1 = new Level(Prefix("levels/room1.json"));
             uiShader = new Shader(null, null, Prefix("shaders/ui.glsl"));
         }
     }

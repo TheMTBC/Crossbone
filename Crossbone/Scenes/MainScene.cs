@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Crossbone.Scenes
 {
-    internal class DemoScene : Scene
+    internal class MainScene : Scene
     {
         public override void Start()
         {
-            new LevelBuilder(game.resources.dungeon, game.resources.demo, new Vector2(110, 70)).Build(this);
+            new LevelBuilder(game.resources.dungeon, game.resources.room1, new Vector2(117, 70)).Build(this);
 
             Add(new Player()).Get<Transform>().position += new Vector2(375, 480);
 

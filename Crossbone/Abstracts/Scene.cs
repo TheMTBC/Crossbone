@@ -25,7 +25,10 @@ namespace Crossbone.Abstracts
         {
             foreach (var entity in _entities.ToArray())
             {
-                entity.Tick();
+                if (game.Scene == this)
+                {
+                    entity.Tick();
+                }
             }
         }
 

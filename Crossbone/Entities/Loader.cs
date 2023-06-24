@@ -10,14 +10,25 @@ namespace Crossbone.Entities
 {
     internal class Loader : Entity
     {
+        private float _time = 0;
+
         public override void Start()
         {
             base.Start();
             if (game != null)
             {
                 game.resources = new Resources();
-                game.Scene = new DemoScene();
             }
+        }
+
+        public override void Tick()
+        {
+            if (_time > 3) {
+                game.Scene = new MainScene();
+                return;
+            }
+            _time += game.deltaTime;
+            base.Tick();
         }
     }
 }
