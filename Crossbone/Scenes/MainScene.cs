@@ -15,11 +15,15 @@ namespace Crossbone.Scenes
     {
         public override void Start()
         {
-            new LevelBuilder(game.resources.dungeon, game.resources.room1, new Vector2(117, 70)).Build(this);
+            var level = new Vector2(
+                game.width / 2 - game.resources.dungeon.size * game.resources.room1.width / 2,
+                game.height / 2 - game.resources.dungeon.size * game.resources.room1.height / 2
+            );
+            new LevelBuilder(game.resources.dungeon, game.resources.room1, level).Build(this);
 
-            Add(new Player()).Get<Transform>().position += new Vector2(375, 480);
+            Add(new Player()).Get<Transform>().position += new Vector2(360, 456);
 
-            var trigger = Add(new UseTrigger(new Vector2(492, 201), new Vector2(60, 60)));
+            var trigger = Add(new UseTrigger(new Vector2(483, 171), new Vector2(60, 60)));
             trigger.Action += (player) =>
             {
                 if (game.Scene.Get<DialogBox>() == null)

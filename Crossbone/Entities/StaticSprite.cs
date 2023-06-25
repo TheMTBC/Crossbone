@@ -32,8 +32,8 @@ namespace Crossbone.Entities
 
         public override void Tick()
         {
-            base.Tick();
             _renderer.position = _transform.ToWorld();
+            base.Tick();
         }
     }
 }

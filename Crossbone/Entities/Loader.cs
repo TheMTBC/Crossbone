@@ -23,7 +23,7 @@ namespace Crossbone.Entities
 
         public override void Tick()
         {
-            if (_time > 3) {
+            if (_time > 1) {
                 game.Scene = new MainScene();
                 return;
             }
