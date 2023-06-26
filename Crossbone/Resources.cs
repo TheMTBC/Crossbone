@@ -19,11 +19,16 @@ namespace Crossbone
         {
             player.Dispose();
             frisk.Dispose();
-            font.Dispose();
+            fontRoman.Dispose();
             ui.Dispose();
             logo.Dispose();
             button.Dispose();
-            collider.Dispose();
+            uiStart.Dispose();
+            uiOptions.Dispose();
+            uiCredits.Dispose();
+            uiExit.Dispose();
+            uiSelect.Dispose();
+            shaderUI.Dispose();
         }
 
         public Texture player;
@@ -31,13 +36,18 @@ namespace Crossbone
         public Texture ui;
         public Texture logo;
         public Texture button;
-        public Texture collider;
-        public Animations friskAnimations;
-        public Animations buttonAnimations;
-        public RasterFont font;
-        public Tiles dungeon;
-        public Level room1;
-        public Shader uiShader;
+        public Texture uiStart;
+        public Texture uiOptions;
+        public Texture uiCredits;
+        public Texture uiExit;
+        public Texture uiSelect;
+        public Animations animFrisk;
+        public Animations animButton;
+        public RasterFont fontRoman;
+        public Tiles tilesDungeon;
+        public Level roomRoom1;
+        public Level roomRoom1s1;
+        public Shader shaderUI;
 
         public Resources()
         {
@@ -46,13 +56,18 @@ namespace Crossbone
             ui = new Texture(Prefix("ui.png"));
             logo = new Texture(Prefix("logo.png"));
             button = new Texture(Prefix("button.png"));
-            collider = new Texture(Prefix("collider.png"));
-            friskAnimations = new Animations(Prefix("frisk.json"));
-            buttonAnimations = new Animations(Prefix("button.json"));
-            font = new RasterFont(Prefix("fonts/en.png"), Prefix("fonts/en.json"));
-            dungeon = new Tiles(Prefix("dungeon.png"), Prefix("dungeon.json"));
-            room1 = new Level(Prefix("levels/room1.json"));
-            uiShader = new Shader(null, null, Prefix("shaders/ui.glsl"));
+            uiStart = new Texture(Prefix("ui/start.png"));
+            uiOptions = new Texture(Prefix("ui/options.png"));
+            uiCredits = new Texture(Prefix("ui/credits.png"));
+            uiExit = new Texture(Prefix("ui/exit.png"));
+            uiSelect = new Texture(Prefix("ui/select.png"));
+            animFrisk = new Animations(Prefix("frisk.json"));
+            animButton = new Animations(Prefix("button.json"));
+            fontRoman = new RasterFont(Prefix("fonts/en.png"), Prefix("fonts/en.json"));
+            tilesDungeon = new Tiles(Prefix("dungeon.png"), Prefix("dungeon.json"));
+            roomRoom1 = new Level(Prefix("levels/room1.json"));
+            roomRoom1s1 = new Level(Prefix("levels/room1s1.json"));
+            shaderUI = new Shader(null, null, Prefix("shaders/ui.glsl"));
         }
     }
 }

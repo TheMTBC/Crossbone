@@ -24,11 +24,11 @@ namespace Crossbone.Entities
             _transform = Add(new Transform());
             _renderer = Add(new Renderer(game.resources.frisk));
             _boxCollider = Add(new BoxCollider(
-                new Vector2(game.resources.friskAnimations.width, game.resources.friskAnimations.height / 2),
-                new Vector2(0, game.resources.friskAnimations.height / 2),
+                new Vector2(game.resources.animFrisk.width * 0.7f, game.resources.animFrisk.height / 2 * 0.7f),
+                new Vector2(0, game.resources.animFrisk.height / 2 * 1.3f),
                 BoxCollider.SOLID_LAYER | BoxCollider.TRIGGER_LAYER
             ));
-            _animator = Add(new Animator(game.resources.friskAnimations, "down"));
+            _animator = Add(new Animator(game.resources.animFrisk, "down"));
         }
 
         private int IsCollide(Vector2 offset)

@@ -30,8 +30,8 @@ namespace Crossbone.Entities
         public override void Start()
         {
             base.Start();
-            _renderer = Add(new Renderer(game.resources.ui, game.resources.uiShader));
-            _textRenderer = Add(new TextRenderer(game.resources.font));
+            _renderer = Add(new Renderer(game.resources.ui, game.resources.shaderUI));
+            _textRenderer = Add(new TextRenderer(game.resources.fontRoman));
         }
 
         public override void Tick()

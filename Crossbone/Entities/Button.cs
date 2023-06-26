@@ -15,8 +15,8 @@ namespace Crossbone.Entities
         private Renderer _renderer;
         private BoxCollider _boxCollider;
         private Animator _animator;
-        public Action<Button> OnPress = (a) => { };
-        public Action<Button> OnUnPress = (a) => { };
+        public Action<Button>? OnPress;
+        public Action<Button>? OnUnPress;
         private bool _state = false;
 
         public override void Start()
@@ -24,8 +24,8 @@ namespace Crossbone.Entities
             base.Start();
             _transform = Add(new Transform());
             _renderer = Add(new Renderer(game.resources.button));
-            _boxCollider = Add(new BoxCollider(new Vector2(game.resources.buttonAnimations.width, game.resources.buttonAnimations.height), new Vector2(), BoxCollider.TRIGGER_LAYER));
-            _animator = Add(new Animator(game.resources.buttonAnimations, "idle"));
+            _boxCollider = Add(new BoxCollider(new Vector2(game.resources.animButton.width, game.resources.animButton.height), new Vector2(), BoxCollider.TRIGGER_LAYER));
+            _animator = Add(new Animator(game.resources.animButton, "idle"));
         }
 
         private bool IsCollide()
@@ -53,11 +53,11 @@ namespace Crossbone.Entities
             {
                 if (c == true)
                 {
-                    OnPress.Invoke(this);
+                    OnPress?.Invoke(this);
                 }
                 else
                 {
-                    OnUnPress.Invoke(this);
+                    OnUnPress?.Invoke(this);
                 }
                 _state = c;
             }

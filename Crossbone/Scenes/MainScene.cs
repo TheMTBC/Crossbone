@@ -6,6 +6,7 @@ using Crossbone.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,21 +14,33 @@ namespace Crossbone.Scenes
 {
     internal class MainScene : Scene
     {
+        private Transform _player;
+
         public override void Start()
         {
+            CreateRoom1();
+            CreateRoom1s1();
+            
+
+            _player = Add(new Player()).Get<Transform>();
+            _player.position += new Vector2(360, 426);
+
+
+            Add(new FPSMeter());
+        }
+
+        private void CreateRoom1()
+        {
             var level = new Vector2(
-                game.width / 2 - game.resources.dungeon.size * game.resources.room1.width / 2,
-                game.height / 2 - game.resources.dungeon.size * game.resources.room1.height / 2
+                game.width / 2 - game.resources.tilesDungeon.size * game.resources.roomRoom1.width / 2,
+                game.height / 2 - game.resources.tilesDungeon.size * game.resources.roomRoom1.height / 2
             );
-            var builder = new LevelBuilder(game.resources.dungeon, game.resources.room1, level);
+            var builder = new LevelBuilder(game.resources.tilesDungeon, game.resources.roomRoom1, level);
             builder.Build(this);
             CreateButton(builder, 10, 6, "1");
             CreateButton(builder, 10, 8, "3");
             CreateButton(builder, 9, 7, "4");
             CreateButton(builder, 11, 7, "2");
-
-            Add(new Player()).Get<Transform>().position += new Vector2(360, 426);
-
             var trigger = Add(new UseTrigger(new Vector2(483, 171), new Vector2(60, 60)));
             trigger.Action += (tr, player) =>
             {
@@ -36,26 +49,49 @@ namespace Crossbone.Scenes
                     game.Scene.Add(new DialogBox()).Text = "Up, up, down, down, left, right, left, right";
                 }
             };
-
-            Add(new FPSMeter());
         }
 
-        private string code;
+        private void CreateRoom1s1()
+        {
+            var level = new Vector2(
+                game.width / 2 - game.resources.tilesDungeon.size * game.resources.roomRoom1s1.width / 2,
+                game.height / 2 - game.resources.tilesDungeon.size * game.resources.roomRoom1s1.height / 2
+            ) + new Vector2(game.width, 0);
+            var builder = new LevelBuilder(game.resources.tilesDungeon, game.resources.roomRoom1s1, level);
+            builder.Build(this);
+
+            CreateButton(builder, 10, 6, "");
+            CreateButton(builder, 10, 8, "");
+            CreateButton(builder, 9, 7, "");
+            CreateButton(builder, 11, 7, "");
+
+            var trigger = Add(new UseTrigger(new Vector2(483, 171) + new Vector2(game.width, 0), new Vector2(60, 60)));
+            trigger.Action += (tr, player) =>
+            {
+                if (game.Scene.Get<DialogBox>() == null)
+                {
+                    game.Scene.Add(new DialogBox()).Text = "ZAEBALO ETO EBATORIYA";
+                }
+            };
+        }
+
+        private string _code;
 
         private void WriteCode(string b)
         {
-            code += b;
-            if ("11334242".StartsWith(code))
+            _code += b;
+            if ("11334242".StartsWith(_code))
             {
-                if ("11334242" == code)
+                if ("11334242" == _code)
                 {
-                    Console.WriteLine("CORRECT");
+                    camera.position += new Vector2(game.width, 0);
+                    _player.position += new Vector2(game.width, 0);
+                    _code = "";
                 }
             }
             else
             {
-                code = "";
-                Console.WriteLine("reset");
+                _code = "";
             }
         }
 

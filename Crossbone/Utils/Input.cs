@@ -48,7 +48,11 @@ namespace Crossbone.Utils
             {
                 _down = d;
             }
+            OnRelease?.Invoke(e);
         }
+
+        public Action<SFML.Window.KeyEventArgs>? OnPress;
+        public Action<SFML.Window.KeyEventArgs>? OnRelease;
 
         private void Window_KeyPressed(object? sender, SFML.Window.KeyEventArgs e)
         {
@@ -73,6 +77,7 @@ namespace Crossbone.Utils
             {
                 use = true;
             }
+            OnPress?.Invoke(e);
         }
     }
 }

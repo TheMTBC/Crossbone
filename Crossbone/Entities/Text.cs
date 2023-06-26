@@ -25,7 +25,7 @@ namespace Crossbone.Entities
         {
             _transform = new Transform();
             Add(_transform);
-            _textRenderer = new TextRenderer(game.resources.font);
+            _textRenderer = new TextRenderer(game.resources.fontRoman);
             Add(_textRenderer);
         }
 
