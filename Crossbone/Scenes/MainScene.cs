@@ -19,12 +19,17 @@ namespace Crossbone.Scenes
                 game.width / 2 - game.resources.dungeon.size * game.resources.room1.width / 2,
                 game.height / 2 - game.resources.dungeon.size * game.resources.room1.height / 2
             );
-            new LevelBuilder(game.resources.dungeon, game.resources.room1, level).Build(this);
+            var builder = new LevelBuilder(game.resources.dungeon, game.resources.room1, level);
+            builder.Build(this);
+            CreateButton(builder, 10, 6, "1");
+            CreateButton(builder, 10, 8, "3");
+            CreateButton(builder, 9, 7, "4");
+            CreateButton(builder, 11, 7, "2");
 
-            Add(new Player()).Get<Transform>().position += new Vector2(360, 456);
+            Add(new Player()).Get<Transform>().position += new Vector2(360, 426);
 
             var trigger = Add(new UseTrigger(new Vector2(483, 171), new Vector2(60, 60)));
-            trigger.Action += (player) =>
+            trigger.Action += (tr, player) =>
             {
                 if (game.Scene.Get<DialogBox>() == null)
                 {
@@ -33,6 +38,36 @@ namespace Crossbone.Scenes
             };
 
             Add(new FPSMeter());
+        }
+
+        private string code;
+
+        private void WriteCode(string b)
+        {
+            code += b;
+            if ("11334242".StartsWith(code))
+            {
+                if ("11334242" == code)
+                {
+                    Console.WriteLine("CORRECT");
+                }
+            }
+            else
+            {
+                code = "";
+                Console.WriteLine("reset");
+            }
+        }
+
+        private Button CreateButton(LevelBuilder builder, int x, int y, string b)
+        {
+            var button = Add(new Button());
+            builder.ApplyTransform(button, x, y);
+            button.OnPress += (button) =>
+            {
+                WriteCode(b);
+            };
+            return button;
         }
     }
 }

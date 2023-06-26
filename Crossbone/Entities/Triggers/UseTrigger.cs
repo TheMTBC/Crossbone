@@ -15,7 +15,7 @@ namespace Crossbone.Entities.Triggers
         private BoxCollider _boxCollider;
         private Vector2 _position;
         private Vector2 _size;
-        public Action<Player> Action;
+        public Action<UseTrigger, Player> Action;
 
         public UseTrigger(Vector2 position, Vector2 size)
         {
@@ -43,7 +43,7 @@ namespace Crossbone.Entities.Triggers
                 {
                     if (game.input.use)
                     {
-                        Action.Invoke((Player)collider.entity);
+                        Action.Invoke(this, (Player)collider.entity);
                     }
                 }
             }

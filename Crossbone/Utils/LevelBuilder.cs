@@ -29,12 +29,17 @@ namespace Crossbone.Utils
                 for (int y = 0; y < _level.height; y++)
                 {
                     var tile = scene.Add(new StaticTile(_tiles, _level.GetTile(x, y)));
-                    var tr = tile.Get<Transform>();
-                    if (tr != null)
-                    {
-                        tr.position = new Vector2(x * _tiles.size, y * _tiles.size) + _offset;
-                    }
+                    ApplyTransform(tile, x, y);
                 }
+            }
+        }
+
+        public void ApplyTransform(Entity entity, int x, int y)
+        {
+            var tr = entity.Get<Transform>();
+            if (tr != null)
+            {
+                tr.position = new Vector2(x * _tiles.size, y * _tiles.size) + _offset;
             }
         }
     }

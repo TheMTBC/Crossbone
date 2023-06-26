@@ -1,5 +1,6 @@
 uniform sampler2D texture;
 uniform vec2 scale;
+uniform vec4 color;
 
 vec2 translate() {
     float border = 0.3;
@@ -32,5 +33,5 @@ vec2 translate() {
 
 void main() {
     vec4 pixel = texture2D(texture, translate());
-    gl_FragColor = pixel;
+    gl_FragColor = pixel * color;
 }

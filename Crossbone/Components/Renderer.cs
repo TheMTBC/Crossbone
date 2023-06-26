@@ -15,6 +15,7 @@ namespace Crossbone.Components
         public Sprite sprite;
         public Vector2 position = new Vector2();
         private Shader? _shader = null;
+        public Color color = new Color(255, 255, 255, 255);
 
         public Renderer(Texture texture)
         {
@@ -41,6 +42,7 @@ namespace Crossbone.Components
             {
                 _shader.SetUniform("texture", Shader.CurrentTexture);
                 _shader.SetUniform("scale", sprite.Scale);
+                _shader.SetUniform("color", color);
                 game.window.Draw(sprite, new RenderStates(_shader));
             }
             else
