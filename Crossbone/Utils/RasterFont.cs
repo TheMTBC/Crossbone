@@ -12,7 +12,7 @@ namespace Crossbone.Utils
     internal class RasterFont : IDisposable
     {
         public Texture texture;
-        private int _height;
+        public int height;
         private Dictionary<char, int> _indexes = new Dictionary<char, int>();
         private Dictionary<char, int> _widthes = new Dictionary<char, int>();
 
@@ -26,7 +26,7 @@ namespace Crossbone.Utils
         {
             var data = File.ReadAllText(fileName);
             var document = JsonDocument.Parse(data);
-            _height = document.RootElement.GetProperty("height").GetInt32();
+            height = document.RootElement.GetProperty("height").GetInt32();
             foreach (var gliph in document.RootElement.GetProperty("gliphs").EnumerateObject())
             {
                 _indexes.Add(gliph.Name[0], _indexes.Count);
@@ -51,7 +51,7 @@ namespace Crossbone.Utils
             {
                 return;
             }
-            sprite.TextureRect = new IntRect(0, _height * i, GetWidth(ch), _height);
+            sprite.TextureRect = new IntRect(0, height * i, GetWidth(ch), height);
         }
 
         public void Dispose()

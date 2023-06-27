@@ -20,6 +20,7 @@ namespace Crossbone.Scenes
             var distributor = Add(new Distributor());
             distributor.AddUI(Add(new UIButton(game.resources.uiStart, new Utils.Vector2(60, 150), (b) =>
             {
+                game.resources.musicDungeon.Play();
                 game.Scene = new MainScene();
             })));
             distributor.AddUI(Add(new UIButton(game.resources.uiOptions, new Utils.Vector2(60, 200), (b) =>

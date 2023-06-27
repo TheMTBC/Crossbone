@@ -18,6 +18,7 @@ namespace Crossbone.Entities
         public Action<Button>? OnPress;
         public Action<Button>? OnUnPress;
         private bool _state = false;
+        private SoundPlayer _soundPlayer;
 
         public override void Start()
         {
@@ -26,6 +27,7 @@ namespace Crossbone.Entities
             _renderer = Add(new Renderer(game.resources.button));
             _boxCollider = Add(new BoxCollider(new Vector2(game.resources.animButton.width, game.resources.animButton.height), new Vector2(), BoxCollider.TRIGGER_LAYER));
             _animator = Add(new Animator(game.resources.animButton, "idle"));
+            _soundPlayer = Add(new SoundPlayer(game.resources.soundSndBreak1));
         }
 
         private bool IsCollide()
@@ -54,6 +56,7 @@ namespace Crossbone.Entities
                 if (c == true)
                 {
                     OnPress?.Invoke(this);
+                    _soundPlayer.Play(30);
                 }
                 else
                 {

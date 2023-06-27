@@ -63,7 +63,11 @@ namespace Crossbone.Entities
 
         public override void Tick()
         {
-
+            if (game.Scene.Get<DialogBox>() != null)
+            {
+                base.Tick();
+                return;
+            }
             var offset = (game.input.x * new Vector2(1, 0) + game.input.y * new Vector2(0, -1)) * 150 * game.deltaTime;
             if (IsCollide(offset) == 0)
             {

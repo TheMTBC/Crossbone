@@ -28,8 +28,11 @@ namespace Crossbone.Utils
             {
                 for (int y = 0; y < _level.height; y++)
                 {
-                    var tile = scene.Add(new StaticTile(_tiles, _level.GetTile(x, y)));
-                    ApplyTransform(tile, x, y);
+                    if (_level.GetTile(x, y) >= 0)
+                    {
+                        var tile = scene.Add(new StaticTile(_tiles, _level.GetTile(x, y)));
+                        ApplyTransform(tile, x, y);
+                    }
                 }
             }
         }

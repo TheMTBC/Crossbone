@@ -25,6 +25,7 @@ namespace Crossbone.Entities
                 _text = value;
             }
         }
+        private SoundPlayer _soundPlayer;
 
 
         public override void Start()
@@ -32,7 +33,10 @@ namespace Crossbone.Entities
             base.Start();
             _renderer = Add(new Renderer(game.resources.ui, game.resources.shaderUI));
             _textRenderer = Add(new TextRenderer(game.resources.fontRoman));
+            _soundPlayer = Add(new SoundPlayer(game.resources.soundSndTalk1));
         }
+
+        public Func<DialogBox, string?> OnNext;
 
         public override void Tick()
         {
@@ -44,6 +48,10 @@ namespace Crossbone.Entities
                 _time = 0;
                 if (_index <= _text.Length)
                 {
+                    if (_text[Math.Min(_index, _text.Length - 1)] != ' ')
+                    {
+                        _soundPlayer.Play(30);
+                    }
                     _textRenderer.text = _text.Substring(0, _index);
                     _index++;
                 }
@@ -58,8 +66,16 @@ namespace Crossbone.Entities
                 }
                 else
                 {
-                    game.Scene.Remove(this);
-                    return;
+                    var t = OnNext?.Invoke(this);
+                    if (t != null)
+                    {
+                        Text = t;
+                    }
+                    else
+                    {
+                        game.Scene.Remove(this);
+                        return;
+                    }
                 }
             }
             base.Tick();

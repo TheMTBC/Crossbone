@@ -33,13 +33,20 @@ namespace Crossbone.Components
         {
             base.Tick();
             int offset = 0;
+            int line = 0;
             foreach (var ch in text)
             {
+                if (ch == '\n')
+                {
+                    line += 1;
+                    offset = 0;
+                    continue;
+                }
                 int width = _font.GetWidth(ch);
                 if (width > 0)
                 {
                     _font.ApplyTextureRect(ch, _sprite);
-                    _sprite.Position = (position + new Vector2(offset, 0)).vector;
+                    _sprite.Position = (position + new Vector2(offset, line * _font.height)).vector;
                     game.window.Draw(_sprite);
                 }
                 offset += width;

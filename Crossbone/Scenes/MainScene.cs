@@ -42,7 +42,7 @@ namespace Crossbone.Scenes
             CreateButton(builder, 9, 7, "4");
             CreateButton(builder, 11, 7, "2");
             var trigger = Add(new UseTrigger(new Vector2(483, 171), new Vector2(60, 60)));
-            trigger.Action += (tr, player) =>
+            trigger.OnUse += (tr, player) =>
             {
                 if (game.Scene.Get<DialogBox>() == null)
                 {
@@ -66,11 +66,21 @@ namespace Crossbone.Scenes
             CreateButton(builder, 11, 7, "");
 
             var trigger = Add(new UseTrigger(new Vector2(483, 171) + new Vector2(game.width, 0), new Vector2(60, 60)));
-            trigger.Action += (tr, player) =>
+            trigger.OnUse += (tr, player) =>
             {
                 if (game.Scene.Get<DialogBox>() == null)
                 {
-                    game.Scene.Add(new DialogBox()).Text = "ZAEBALO ETO EBATORIYA";
+                    var a = game.Scene.Add(new DialogBox());
+                    a.Text = "YA voobshche delayu, chto hochu (A)\nHochu implanty — zvonyu vrachu (Allyo)\nKto menya ne lyubit — ya vas ne slyshu (CHyo?)\nVy prosto mne zaviduete, ya molchu";
+                    a.OnNext += (e) =>
+                    {
+                        var d = "YA ne molchu, kogda ya hochu\nYA ne prodayus', no za den'gi — da (Da)\nMoj prodyuser govorit: «Ty — pop-zvezda»\nI kstati, moj prodyuser — eto moj muzh, da";
+                        if (a.Text == d)
+                        {
+                            return null;
+                        }
+                        return d;
+                    };
                 }
             };
         }
