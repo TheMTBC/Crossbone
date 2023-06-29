@@ -2,11 +2,6 @@
 using Crossbone.Components;
 using Crossbone.Entities;
 using Crossbone.Entities.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Crossbone.Scenes
 {
@@ -20,8 +15,12 @@ namespace Crossbone.Scenes
             var distributor = Add(new Distributor());
             distributor.AddUI(Add(new UIButton(game.resources.uiStart, new Utils.Vector2(60, 150), (b) =>
             {
-                game.resources.musicDungeon.Play();
-                game.Scene = new MainScene();
+                Add(new Entities.Timer(1f, (t) =>
+                {
+                    game.resources.musicDungeon.Play();
+                    game.Scene = new Level1Scene();
+                }));
+                Add(new Fade(false));
             })));
             distributor.AddUI(Add(new UIButton(game.resources.uiOptions, new Utils.Vector2(60, 200), (b) =>
             {

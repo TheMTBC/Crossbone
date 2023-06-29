@@ -61,6 +61,7 @@ namespace Crossbone
             uiCredits = Add(new Texture(Prefix("ui/credits.png")));
             uiExit = Add(new Texture(Prefix("ui/exit.png")));
             uiSelect = Add(new Texture(Prefix("ui/select.png")));
+            black = Add(new Texture(Prefix("black.png")));
             animFrisk = Add(new Animations(Prefix("frisk.json")));
             animButton = Add(new Animations(Prefix("button.json")));
             fontRoman = Add(new RasterFont(Prefix("fonts/en.png"), Prefix("fonts/en.json")));

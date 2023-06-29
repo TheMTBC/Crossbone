@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Crossbone.Scenes
 {
-    internal class MainScene : Scene
+    internal class Level1Scene : Scene
     {
         private Transform _player;
 
@@ -25,8 +25,7 @@ namespace Crossbone.Scenes
             _player = Add(new Player()).Get<Transform>();
             _player.position += new Vector2(360, 426);
 
-
-            Add(new FPSMeter());
+            Add(new Fade(true));
         }
 
         private void CreateRoom1()
@@ -82,6 +81,15 @@ namespace Crossbone.Scenes
                         return d;
                     };
                 }
+            };
+
+            var ps = Add(new PushTrigger(new Vector2(1100, 90), new Vector2(80, 80)));
+            ps.OnPush += (d) =>
+            {
+                Add(new Fade(false));
+                Add(new Entities.Timer(0.5f, (e) => {
+                        game.Scene = new Level2Scene();
+                }));
             };
         }
 
